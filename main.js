@@ -4,7 +4,7 @@ var enemyNames = ["Ryu", "Chen", "Jackie", "Admiral General Aladin", "Benny the 
 var maximumHealthPossible = 40;
 var maximumStrenghtPossible = 6;
 var maximumDefPossible = 5;
-var maximumLuckPossible = 6;
+var maximumLuckPossible = 5;
 
 //Helpers for the Enemy AI
 var lightAttackCount = 0;
@@ -43,11 +43,11 @@ function Fighter(name, hp, str, def, luck) {
 }
 
 function whatIsYourName() {
-    var name = window.prompt("What is the Name of your Warrior?");
+    var name = window.prompt("What is the name of your Fighter?");
     
     if (!name) {
         do {
-            name = window.prompt("Please name your Warrior.");
+            name = window.prompt("Please name your Fighter.");
         } while (!name);
     }
     return name;
@@ -86,10 +86,10 @@ function enemyDefenseRandomizer() {
     return enemyDefense;
 }
 
-function criticalHitRate(probability) {
+function criticalHitRate(name, probability) {
     var critrate = randomNumber() * 100 + probability * randomNumber();
     if (critrate > 95) {
-        window.alert("A critical!");
+        window.alert("A critical hit from " + name + "! (x2 DMG)");
         return 2;
     } else {
         return 1;
@@ -135,7 +135,7 @@ function enemyMoveRandomizer() {
 
 window.alert("You'll take part in a fighting tournament!");
 
-var you = new Fighter(whatIsYourName(), 50, 5, 1, 1);
+var you = new Fighter(whatIsYourName(), 50, 5, 3, 2);
 
 window.alert("Your Fighter is named " + you.name + 
              ". \nYour starting stats are:\nHP: " + you.hp +
@@ -156,10 +156,10 @@ function attackDamageCalculation(name, attackform, str, luck) {
     var attackDamage;
     switch (attackform) {
     case "Light Attack":
-        attackDamage = Math.round(((str + str * randomNumber()) * criticalHitRate(luck)));
+        attackDamage = Math.round(((str + str * randomNumber()) * criticalHitRate(name,luck)));
         return attackDamage;
     case "Desperate Attack":
-        attackDamage = Math.round(((str + str * randomNumber()) * 1.5 * criticalHitRate(luck)));
+        attackDamage = Math.round(((str + str * randomNumber()) * 1.5 * criticalHitRate(name,luck)));
         return attackDamage;
     case "Defend":
         attackDamage = 0;
@@ -225,7 +225,7 @@ function damagePhase() {
             
         } else if (enemyMove === "Defend") {
             enemy.hp = enemy.hp - Math.round(yourAttack * 0.5);
-            window.alert(you.name + " strikes with a " + yourMove + "(" + Math.round(yourAttack * 0.5) + "DMG) while " + enemy.name + " defends himself and weakens the Damage");
+            window.alert(you.name + " strikes with a " + yourMove + "(" + Math.round(yourAttack * 0.5) + "DMG) while " + enemy.name + " defends himself and weakens the Damage.");
         }
     }
     else if (yourMove === "Desperate Attack") {
@@ -236,7 +236,7 @@ function damagePhase() {
         } else if (enemyMove === "Desperate Attack") {
             enemy.hp = enemy.hp - yourAttack;
             you.hp = you.hp - enemyAttack;
-            window.alert(you.name + " strikes with a " + yourMove + "(" + yourAttack + "DMG) and so did " + enemy.name + " (" + enemyAttack + "DMG!)");
+            window.alert(you.name + " strikes with a " + yourMove + "(" + yourAttack + "DMG) and so did " + enemy.name + " (" + enemyAttack + "DMG)!");
         } else if (enemyMove === "Defend") {
             you.hp = you.hp - yourAttack;
             window.alert(you.name + " rushes forward with a " + yourMove + ". But " + enemy.name + " was able to Counter while he defends and threw " + you.name + "s Damage back at him(" + yourAttack + "DMG)!");
@@ -250,7 +250,7 @@ function damagePhase() {
             enemy.hp = enemy.hp - enemyAttack;
             window.alert(you.name + " takes a defensive stance and counters " + enemy.name + "s " + enemyMove + " (" + enemyAttack + "DMG!) back to him!");
         } else if (enemyMove === "Defend") {
-            window.alert(you.name + " and " + enemy.name + " stared each other in the eyes while catching a breath and thinking about their next moves");
+            window.alert(you.name + " and " + enemy.name + " stared each other in the eyes while catching a breath and thinking about their next moves.");
         }
     }
     else {
@@ -309,7 +309,7 @@ function levelUpCheck() {
         you.luck = you.luck + Math.ceil(randomNumber()*2);
         
         window.alert(you.name + "s new stats are:\nHP: " + you.hp +
-             "(10HP recovered)\nSTR: " + you.str + 
+             " (10HP recovered)\nSTR: " + you.str + 
              "\nDEF: " + you.def +
              "\nLUK: " + you.luck);
     }
