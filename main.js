@@ -1,14 +1,14 @@
 'use strict';
 //SET the range of randomized EnemyStats here:
 var enemyNames = ["Ryu", "Chen", "Jackie", "Admiral General Aladin", "Benny the Retard"];
-var maximumHealthPossible = 50;
-var maximumStrenghtPossible = 5;
-var maximumDefPossible = 5;
-var maximumLuckPossible = 5;
+var maximumHealthPossible = 40;
+var maximumStrenghtPossible = 8;
+var maximumDefPossible = 8;
+var maximumLuckPossible = 8;
 
 var roundCount = 0;
 
-var yourMove = "Light Attack";
+var yourMove;
 var enemyMove;
 
 function randomNumber() {
@@ -52,8 +52,6 @@ function enemyHealthRandomizer() {
     }
     return enemyHP;
 }
-
-
 
 function enemyStrenghtRandomizer() {
     var enemyStrenght = Math.ceil(randomNumber() * maximumStrenghtPossible);
@@ -101,12 +99,26 @@ function enemyMoveRandomizer() {
     }
 }
 
-var you = new Fighter("Wadim", 50, 5, 1, 1);
+window.alert("You'll take part in a fighting tournament!")
+var you = new Fighter(whatIsYourName(), 50, 5, 1, 1);
+window.alert("Your Fighter is named " + you.name + 
+             ". \nYour starting stats are:\nHP: " + you.hp +
+             "\nSTR: " + you.str + 
+             "\nDEF: " + you.def + 
+             "\nLUK: " + you.luck);
+
 var enemy = new Fighter(enemyNameRandomizer(), 
                         enemyHealthRandomizer(), 
                         enemyStrenghtRandomizer(), 
                         enemyDefenseRandomizer(), 
                         enemyLuckRandomizer());
+
+window.alert("Your first enemy is named " + enemy.name + 
+             ". \nHis stats are:\nHP: " + enemy.hp +
+             "\nSTR: " + enemy.str + 
+             "\nDEF: " + enemy.def + 
+             "\nLUK: " + enemy.luck);
+
 
 function attackDamageCalculation(name, attackform, str, luck) {
     var attackDamage;
@@ -169,7 +181,7 @@ function damagePhase() {
             
         } else if (enemyMove === "Defend") {
             enemy.hp = enemy.hp - Math.round(yourAttack * 0.5);
-            window.alert(you.name + " strikes with a " + yourMove + "(" + yourAttack/2 + "DMG) while " + enemy.name + " defends himself and weakens the Damage");
+            window.alert(you.name + " strikes with a " + yourMove + "(" + Math.round(yourAttack * 0.5) + "DMG) while " + enemy.name + " defends himself and weakens the Damage");
         }
     }
     else if (yourMove === "Desperate Attack") {
@@ -189,7 +201,7 @@ function damagePhase() {
     else if (yourMove === "Defend") {
         if (enemyMove === "Light Attack") {
             you.hp = Math.round(you.hp - enemyAttack * 0.5);
-            window.alert(you.name + " defends himself and could weaken " + enemy.name + "s " + enemyMove + "(" + enemyAttack/2 + "DMG) and so did " + enemy.name + "(" + enemyAttack + "DMG)!");
+            window.alert(you.name + " defends himself and could weaken " + enemy.name + "s " + enemyMove + "(" + Math.round(you.hp - enemyAttack * 0.5) + "DMG) and so did " + enemy.name + "(" + enemyAttack + "DMG)!");
         } else if (enemyMove === "Desperate Attack") {
             enemy.hp = enemy.hp - enemyAttack;
             window.alert(you.name + " takes a defensive stance and counters " + enemy.name + "s " + enemyMove + " (" + enemyAttack + "DMG!) back to him");
@@ -197,6 +209,10 @@ function damagePhase() {
             window.alert(you.name + " and " + enemy.name + " stared each other in the eyes while catching a breath and thinking about their next moves");
         }
     }
+    else {
+        you.hp = you.hp - 10;
+        window.alert("It was a bad from " + you.name + "idea trying to invent a new Move called " + yourMove + "in the middle of the fight. " + you.name + " recieved a hard hit (10DMG) while doing so!")
+    } 
         
     
     if (you.hp <= 0) {
