@@ -1,6 +1,6 @@
 'use strict';
 //SET the range of randomized EnemyStats here:
-var enemyNames = ["Ryu", "Chen", "Jackie", "Admiral General Aladin", "Benny the Retard"];
+var enemyNames = ["Ryu", "Chen", "Jackie", "Admiral General Aladin", "Benny the Retard", "Robert the Cannon", "Daniel the Snake", "EK the Tornado", "Andureasu"];
 var maximumHealthPossible = 40;
 var maximumStrenghtPossible = 6;
 var maximumDefPossible = 5;
