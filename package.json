@@ -1,0 +1,22 @@
+{
+  "name": "fightinggame",
+  "version": "1.0.0",
+  "description": "My starting exercise in programming (mainly JS). I'm making a turn based fighting game and improve it as i learn new stuff.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevRobert/FightingGame.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DevRobert/FightingGame/issues"
+  },
+  "homepage": "https://github.com/DevRobert/FightingGame#readme",
+  "devDependencies": {
+    "express": "^4.15.4"
+  }
+}
